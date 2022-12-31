@@ -30,7 +30,9 @@ function handleDrop(event) {
 
   console.log('./data', data, currentColumn)
 
-  window.ioAPI.moveTarea(data, { columna: currentColumn })
+  window.moveTarea(data, currentColumn)
+
+  // window.ioAPI.moveTarea(data, { columna: currentColumn })
 }
 
 

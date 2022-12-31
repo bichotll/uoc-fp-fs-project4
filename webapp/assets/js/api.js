@@ -37,3 +37,22 @@ window.getAllTareas = () => fetch(API_URL, {
   "mode": "cors",
   "credentials": "omit"
 });
+
+window.moveTarea = (id, columna) => fetch(API_URL, {
+  "headers": {
+    "accept": "*/*",
+    "accept-language": "en,es;q=0.9,ca;q=0.8,tr;q=0.7",
+    "content-type": "application/json",
+    "sec-ch-ua": "\"Google Chrome\";v=\"107\", \"Chromium\";v=\"107\", \"Not=A?Brand\";v=\"24\"",
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua-platform": "\"macOS\"",
+    "sec-fetch-dest": "empty",
+    "sec-fetch-mode": "cors",
+    "sec-fetch-site": "same-origin"
+  },
+  "referrerPolicy": "strict-origin-when-cross-origin",
+  "body": "{\"query\":\"                       \\n              \\n                               \\n                                        \\n       \\n         \\n            \\n                 \\n     \\n            \\n                             \\n                                       \\n                  \\n                                 \\n                              \\n                                       \\n     \\n       \\n          \\n               \\n          \\n                \\n             \\n   \\n \\n\\n                   \\n            \\n                             \\n                                      \\n     \\n       \\n          \\n               \\n   \\n \\n\\n                   \\n            \\n                             \\n                                       \\n                 \\n                                 \\n                              \\n                                       \\n     \\n       \\n          \\n               \\n          \\n                \\n             \\n   \\n \\n\\n                      \\n               \\n                                    \\n                                \\n                                         \\n     \\n       \\n   \\n \\n\\n                      \\n               \\n                                    \\n                                \\n                                         \\n     \\n       \\n          \\n               \\n   \\n \\n\\nmutation moveTarea {\\n  moveTarea (\\n    _id: \\\"" + id + "\\\",\\n    columna: \\\"" + columna + "\\\",\\n  ) {\\n    _id\\n    columna\\n    titulo\\n    descripcion\\n  }\\n}\\n\\n                      \\n               \\n                                   \\n     \\n       \\n   \\n \\n\\n                      \\n               \\n                                   \\n     \\n       \\n   \\n \\n\\n                    \\n              \\n       \\n          \\n               \\n   \\n \\n\\n                    \\n             \\n       \\n          \\n               \\n          \\n           \\n                \\n             \\n           \\n            \\n   \\n \\n\\n                    \\n                                           \\n       \\n          \\n               \\n   \\n \\n\\n                    \\n                                           \\n       \\n          \\n               \\n          \\n                \\n             \\n   \\n \",\"variables\":{\"titulo\":null,\"descripcion\":null,\"estado\":null,\"fechaInicio\":null,\"fechaFin\":null,\"idPanel\":null},\"operationName\":\"moveTarea\"}",
+  "method": "POST",
+  "mode": "cors",
+  "credentials": "omit"
+});
