@@ -288,11 +288,11 @@ const unsubscribeHello = graphQLWsClient.subscribe(
 
 const unsubscribeTareaMoved = graphQLWsClient.subscribe(
   {
-    query: 'subscription { tareaMoved { _id, columna } }',
+    query: 'subscription { tareaMoved { _id, columna, panelId } }',
   },
   {
     next: (args) => {
-      alertify.success('Tarea movida');
+      alertify.success(`Tarea movida en la columna ${args.data.tareaMoved.columna} del panel con id ${args.data.tareaMoved.panelId}`);
       console.log('next', args)
     },
     error: (e) => console.log('error', e),
