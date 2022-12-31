@@ -271,17 +271,28 @@ window.getAllTareas().then((res) => res.json()).then(({ data }) => {
   })
 })
 
-const client = graphqlWs.createClient({
+const graphQLWsClient = window.graphQLWsClient = graphqlWs.createClient({
   url: 'ws://localhost:2000/graphql',
 });
 
-const unsubscribe = client.subscribe(
+const unsubscribeHello = graphQLWsClient.subscribe(
   {
     query: 'subscription { hello }',
   },
   {
     next: (args) => console.log('next', args),
     error: () => console.log('error'),
+    complete: () => console.log('complete'),
+  },
+);
+
+const unsubscribeTareaMoved = graphQLWsClient.subscribe(
+  {
+    query: 'subscription { tareaMoved { _id, columna } }',
+  },
+  {
+    next: (args) => console.log('next', args),
+    error: (e) => console.log('error', e),
     complete: () => console.log('complete'),
   },
 );

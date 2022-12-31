@@ -1,4 +1,5 @@
 import Tarea from '../models/Tarea.js';
+import { TAREA_MOVED } from '../pubsub/eventos/index.mjs';
 import { pubsub } from '../pubsub/index.mjs';
 
 export const tareaResolver = (root, args) => {
@@ -31,7 +32,11 @@ export const moveTareaResolver = async (root, args) => {
   const tarea = await (Tarea.findById(args._id).exec())
   tarea.columna = args.columna || tarea.columna
 
-  pubsub.publish(TAREA_MOVED, { tareaMoved: tarea })
+  try {
+    pubsub.publish(TAREA_MOVED, { tareaMoved: tarea })
+  } catch (error) {
+    console.log(error)
+  }
 
   return tarea.save()
 }
