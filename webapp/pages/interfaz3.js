@@ -270,3 +270,18 @@ window.getAllTareas().then((res) => res.json()).then(({ data }) => {
     }
   })
 })
+
+const client = graphqlWs.createClient({
+  url: 'ws://localhost:2000/graphql',
+});
+
+const unsubscribe = client.subscribe(
+  {
+    query: 'subscription { hello }',
+  },
+  {
+    next: (args) => console.log('next', args),
+    error: () => console.log('error'),
+    complete: () => console.log('complete'),
+  },
+);
