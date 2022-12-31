@@ -26,6 +26,13 @@ export const updateTareaResolver = async (root, args) => {
   return tarea.save()
 }
 
+export const moveTareaResolver = async (root, args) => {
+  const tarea = await (Tarea.findById(args._id).exec())
+  tarea.columna = args.columna || tarea.columna
+
+  return tarea.save()
+}
+
 export const deleteTareaResolver = async (root, args) => {
   const tarea = await (Tarea.findById(args._id).exec())
 

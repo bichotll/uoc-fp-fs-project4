@@ -26,6 +26,7 @@ import {
   allTareasResolver,
   updateTareaResolver,
   deleteTareaResolver,
+  moveTareaResolver,
 } from './controllers/TareasController.mjs';
 
 
@@ -48,6 +49,7 @@ const resolvers = {
 
     addTarea: addTareaResolver,
     updateTarea: updateTareaResolver,
+    moveTarea: moveTareaResolver,
     deleteTarea: deleteTareaResolver,
   }
 }

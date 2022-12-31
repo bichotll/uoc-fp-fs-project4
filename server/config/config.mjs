@@ -50,6 +50,10 @@ type Mutation {
     columna: String,
     panelId: String
   ): Tarea
+  moveTarea(
+    _id: String,
+    columna: String,
+  ): Tarea
   deleteTarea(
     _id: String,
   ): Tarea
