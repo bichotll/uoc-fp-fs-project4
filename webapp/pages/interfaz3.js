@@ -30,7 +30,7 @@ function handleDrop(event) {
 
   console.log('./data', data, currentColumn)
 
-  window.moveTarea(data, currentColumn)
+  window.moveTarea(data, currentColumn, sessionUserName)
 
   // window.ioAPI.moveTarea(data, { columna: currentColumn })
 }
@@ -1308,11 +1308,11 @@ const unsubscribeHello = graphQLWsClient.subscribe(
 
 const unsubscribeTareaMoved = graphQLWsClient.subscribe(
   {
-    query: 'subscription { tareaMoved { _id, columna, panelId } }',
+    query: 'subscription { tareaMoved { _id, columna, panelId, lastUserName } }',
   },
   {
     next: (args) => {
-      alertify.success(`Tarea movida en la columna ${args.data.tareaMoved.columna} del panel con id ${args.data.tareaMoved.panelId}`);
+      alertify.success(`Tarea movida por el usuario ${args.data.tareaMoved.lastUserName} en la columna ${args.data.tareaMoved.columna} del panel con id ${args.data.tareaMoved.panelId}`);
       console.log('next', args)
     },
     error: (e) => console.log('error', e),

@@ -31,6 +31,7 @@ export const updateTareaResolver = async (root, args) => {
 export const moveTareaResolver = async (root, args) => {
   const tarea = await (Tarea.findById(args._id).exec())
   tarea.columna = args.columna || tarea.columna
+  tarea.lastUserName = args.lastUserName || tarea.lastUserName
 
   try {
     pubsub.publish(TAREA_MOVED, { tareaMoved: tarea })

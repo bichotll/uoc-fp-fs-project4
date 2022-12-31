@@ -14,6 +14,7 @@ const TareaSchema = new Schema({
     columna: String,
     panelId: String,
     fileName: String,
+    lastUserName: String,
 });
 
 const Tarea = mongoose.model('Tarea', TareaSchema);

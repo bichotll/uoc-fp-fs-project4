@@ -9,6 +9,7 @@ type Tarea {
   columna: String
   panelId: String
   fileName: String
+  lastUserName: String
 }
 type Panel {
   _id: String
@@ -51,8 +52,9 @@ type Mutation {
     panelId: String
   ): Tarea
   moveTarea(
-    _id: String,
-    columna: String,
+    _id: String
+    columna: String
+    lastUserName: String
   ): Tarea
   deleteTarea(
     _id: String,
