@@ -1,0 +1,1 @@
+export const TAREA_MOVED = 'TAREA_MOVED'

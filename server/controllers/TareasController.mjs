@@ -1,4 +1,5 @@
 import Tarea from '../models/Tarea.js';
+import { pubsub } from '../pubsub/index.mjs';
 
 export const tareaResolver = (root, args) => {
   return Tarea.findById(args._id).exec()
@@ -29,6 +30,8 @@ export const updateTareaResolver = async (root, args) => {
 export const moveTareaResolver = async (root, args) => {
   const tarea = await (Tarea.findById(args._id).exec())
   tarea.columna = args.columna || tarea.columna
+
+  pubsub.publish(TAREA_MOVED, { tareaMoved: tarea })
 
   return tarea.save()
 }

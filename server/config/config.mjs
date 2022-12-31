@@ -71,6 +71,11 @@ type Mutation {
     _id: String,
   ): Panel
 }
+
+type Subscription {
+  hello: String,
+  tareaMoved: Tarea
+}
 `
 
 export const mongoDbUrl = 'mongodb+srv://bdAdmin:1234@bduoc.kd8xpcw.mongodb.net/test'

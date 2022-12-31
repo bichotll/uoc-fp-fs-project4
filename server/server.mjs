@@ -1,6 +1,10 @@
 import { ApolloServer } from '@apollo/server';
 import { expressMiddleware } from '@apollo/server/express4';
 import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer'
+import { makeExecutableSchema } from '@graphql-tools/schema';
+import { WebSocketServer } from 'ws';
+import { useServer } from 'graphql-ws/lib/use/ws';
+
 import express from 'express';
 import http from 'http';
 import cors from 'cors';
@@ -29,6 +33,8 @@ import {
   moveTareaResolver,
 } from './controllers/TareasController.mjs';
 
+import { pubsub } from './pubsub/index.mjs';
+import { TAREA_MOVED } from './pubsub/eventos/index.mjs';
 
 
 // se crean los resolvers
@@ -51,7 +57,22 @@ const resolvers = {
     updateTarea: updateTareaResolver,
     moveTarea: moveTareaResolver,
     deleteTarea: deleteTareaResolver,
-  }
+  },
+
+  Subscription: {
+    hello: {
+      // Example using an async generator
+      subscribe: async function* () {
+        for await (const word of ['Hello', 'Bonjour', 'Ciao']) {
+          yield { hello: word };
+        }
+      },
+    },
+    tareaMoved: {
+      // More on pubsub below
+      subscribe: () => pubsub.asyncIterator([TAREA_MOVED]),
+    },
+  },
 }
 
 const app = express();
@@ -183,13 +204,38 @@ io.on('connection', (socket) => {
   });
 });
 
+const schema = makeExecutableSchema({ typeDefs, resolvers });
+
 // Set up Apollo Server
 const server = new ApolloServer({
-  typeDefs,
-  resolvers,
-  plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
+  schema,
+  plugins: [
+    // Proper shutdown for the HTTP server.
+    ApolloServerPluginDrainHttpServer({ httpServer }),
+
+    // Proper shutdown for the WebSocket server.
+    {
+      async serverWillStart() {
+        return {
+          async drainServer() {
+            await serverCleanup.dispose();
+          },
+        };
+      },
+    },
+  ],
 });
 await server.start();
+
+const wsServer = new WebSocketServer({
+  // This is the `httpServer` we created in a previous step.
+  server: httpServer,
+  // Pass a different path here if app.use
+  // serves expressMiddleware at a different path
+  path: '/graphql',
+});
+
+const serverCleanup = useServer({ schema }, wsServer);
 
 app.use(
   '/graphql',
