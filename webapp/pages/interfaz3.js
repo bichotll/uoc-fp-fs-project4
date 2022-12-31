@@ -291,7 +291,10 @@ const unsubscribeTareaMoved = graphQLWsClient.subscribe(
     query: 'subscription { tareaMoved { _id, columna } }',
   },
   {
-    next: (args) => console.log('next', args),
+    next: (args) => {
+      alertify.success('Tarea movida');
+      console.log('next', args)
+    },
     error: (e) => console.log('error', e),
     complete: () => console.log('complete'),
   },
