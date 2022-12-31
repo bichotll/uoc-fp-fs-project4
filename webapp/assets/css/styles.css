@@ -39,6 +39,6 @@
   cursor: move;
 }
 
-.cardbody:active {
+.cardbody:active:hover {
   border: 1px dashed #000;
 }
